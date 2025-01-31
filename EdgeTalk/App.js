@@ -7,7 +7,8 @@ import {
   StyleSheet,
   ActivityIndicator,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
+  Keyboard
 } from 'react-native';
 
 // You might want to store this in a config file or environment variable
@@ -25,6 +26,7 @@ const App = () => {
       return;
     }
 
+    Keyboard.dismiss();
     setLoading(true);
     setError('');
     
@@ -51,11 +53,10 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>EdgeTalk AI</Text>
-      
       <ScrollView 
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
       >
         {error ? (
           <Text style={styles.error}>{error}</Text>
@@ -73,18 +74,19 @@ const App = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter your prompt..."
+            placeholderTextColor="#888888"
             value={prompt}
             onChangeText={setPrompt}
             multiline
           />
           
           <TouchableOpacity 
-            style={styles.button}
+            style={[styles.button, loading && styles.buttonDisabled]}
             onPress={fetchResponse}
             disabled={loading}
           >
             {loading ? (
-              <ActivityIndicator color="#fff" />
+              <ActivityIndicator color="#ffffff" />
             ) : (
               <Text style={styles.buttonText}>Send</Text>
             )}
@@ -98,61 +100,79 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#1a1a1a',
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
-    padding: 20,
-    paddingBottom: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    padding: 20,
+    padding: 16,
+    paddingBottom: 16,
   },
   inputWrapper: {
     borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    backgroundColor: '#fff',
+    borderTopColor: '#333333',
+    backgroundColor: '#2a2a2a',
+    paddingBottom: 16,
   },
   inputContainer: {
-    padding: 15,
+    padding: 12,
+    gap: 8,
   },
   input: {
-    backgroundColor: '#f8f8f8',
-    borderRadius: 8,
-    padding: 15,
-    marginBottom: 10,
-    minHeight: 60,
-    maxHeight: 120,
+    backgroundColor: '#333333',
+    borderRadius: 10,
+    padding: 12,
+    minHeight: 45,
+    maxHeight: 90,
     textAlignVertical: 'top',
+    color: '#ffffff',
+    placeholderTextColor: '#888888',
+    fontSize: 15,
+    borderWidth: 1,
+    borderColor: '#404040',
   },
   button: {
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
-    padding: 15,
+    backgroundColor: '#0A84FF',
+    borderRadius: 10,
+    padding: 12,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonDisabled: {
+    opacity: 0.7,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 16,
+    color: '#ffffff',
+    fontSize: 15,
     fontWeight: '600',
+    letterSpacing: 0.5,
   },
   error: {
-    color: 'red',
-    marginBottom: 10,
+    color: '#ff6b6b',
+    marginBottom: 12,
+    fontSize: 14,
+    textAlign: 'center',
   },
   responseContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 15,
+    backgroundColor: '#2a2a2a',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#404040',
   },
   responseText: {
     fontSize: 16,
     lineHeight: 24,
+    color: '#ffffff',
   },
 });
 
