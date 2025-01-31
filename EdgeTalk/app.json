@@ -10,19 +10,31 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1a1a1a"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#1a1a1a"
+      },
+      "package": "com.edgetalk.app",
+      "permissions": ["android.permission.INTERNET"],
+      "softwareKeyboardLayoutMode": "pan",
+      "allowBackup": false
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "536690ad-2914-4c6f-8cff-29e1cff2b8a3"
+      }
     }
   }
 }

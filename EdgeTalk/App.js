@@ -7,7 +7,8 @@ import {
   ActivityIndicator,
   ScrollView,
   SafeAreaView,
-  Keyboard
+  Keyboard,
+  StatusBar
 } from 'react-native';
 import { styles } from './styles';
 import { API_URL } from '@env';
@@ -41,7 +42,7 @@ const App = () => {
         throw new Error(data.error || 'Failed to get response');
       }
       
-      // Format response with prompt included
+      // Format response with prompt included in the response
       const fullResponse = `Q: ${prompt}\n\nA: ${data.response}`;
       setResponse(fullResponse);
       setPrompt(''); // Clear the input field
@@ -54,6 +55,12 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="#1a1a1a"
+        translucent={false}
+      />
+      
       <ScrollView 
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
