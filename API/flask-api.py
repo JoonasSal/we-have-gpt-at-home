@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS  # Add CORS support
+from flask_cors import CORS  
 import ollama 
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS
+CORS(app)  
 
 @app.route('/generate', methods=['POST'])
 def generate():
@@ -18,7 +18,6 @@ def generate():
             {'role': 'user', 'content': prompt}
         ])
         
-        # Extract the actual response content
         message_content = response['message']['content']
         
         return jsonify({
