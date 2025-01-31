@@ -5,6 +5,9 @@ import ollama
 app = Flask(__name__)
 CORS(app)  # Enable CORS
 
+# Choose Model to run
+MODEL_NAME = "deepseek-r1:8b"  
+
 @app.route('/generate', methods=['POST'])
 def generate():
     try:
@@ -14,7 +17,7 @@ def generate():
         if not prompt:
             return jsonify({'error': 'Prompt is required'}), 400
             
-        response = ollama.chat(model='mistral', messages=[
+        response = ollama.chat(model=MODEL_NAME, messages=[
             {'role': 'user', 'content': prompt}
         ])
         
