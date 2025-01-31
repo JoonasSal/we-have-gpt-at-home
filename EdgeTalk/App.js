@@ -51,9 +51,24 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.title}>EdgeTalk AI</Text>
-        
+      <Text style={styles.title}>EdgeTalk AI</Text>
+      
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {error ? (
+          <Text style={styles.error}>{error}</Text>
+        ) : null}
+
+        {response ? (
+          <View style={styles.responseContainer}>
+            <Text style={styles.responseText}>{response}</Text>
+          </View>
+        ) : null}
+      </ScrollView>
+
+      <View style={styles.inputWrapper}>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -75,17 +90,7 @@ const App = () => {
             )}
           </TouchableOpacity>
         </View>
-
-        {error ? (
-          <Text style={styles.error}>{error}</Text>
-        ) : null}
-
-        {response ? (
-          <View style={styles.responseContainer}>
-            <Text style={styles.responseText}>{response}</Text>
-          </View>
-        ) : null}
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -95,24 +100,34 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
+  scrollView: {
+    flex: 1,
+  },
   scrollContent: {
     padding: 20,
+    paddingBottom: 10,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
+    padding: 20,
+  },
+  inputWrapper: {
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    backgroundColor: '#fff',
   },
   inputContainer: {
-    marginBottom: 20,
+    padding: 15,
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: '#f8f8f8',
     borderRadius: 8,
     padding: 15,
     marginBottom: 10,
-    minHeight: 100,
+    minHeight: 60,
+    maxHeight: 120,
     textAlignVertical: 'top',
   },
   button: {
