@@ -10,9 +10,7 @@ import {
   Keyboard
 } from 'react-native';
 import { styles } from './styles';
-
-// You might want to store this in a config file or environment variable
-const API_URL = 'http://192.168.1.223:5000/generate';
+import { API_URL } from '@env';
 
 const App = () => {
   const [prompt, setPrompt] = useState('');
@@ -43,7 +41,10 @@ const App = () => {
         throw new Error(data.error || 'Failed to get response');
       }
       
-      setResponse(data.response);
+      // Format response with prompt included
+      const fullResponse = `Q: ${prompt}\n\nA: ${data.response}`;
+      setResponse(fullResponse);
+      setPrompt(''); // Clear the input field
     } catch (err) {
       setError(err.message || 'Failed to connect to the server');
     } finally {
