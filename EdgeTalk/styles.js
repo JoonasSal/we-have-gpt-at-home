@@ -11,12 +11,12 @@ export const styles = StyleSheet.create({
   scrollContent: {
     padding: 16,
     paddingBottom: 16,
-    paddingTop: 40,
+    paddingTop: 30,
   },
   inputWrapper: {
     borderTopWidth: 1,
-    borderTopColor: '#333333',
-    backgroundColor: '#2a2a2a',
+    borderTopColor: '#1a1a1a',
+    backgroundColor: '#1a1a1a',
     paddingBottom: 16,
   },
   inputContainer: {
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     gap: 8,
   },
   input: {
-    backgroundColor: '#333333',
+    backgroundColor: '#1a1a1a',
     borderRadius: 10,
     padding: 12,
     minHeight: 45,
@@ -66,12 +66,12 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   responseContainer: {
-    backgroundColor: '#2a2a2a',
+    backgroundColor: '#1a1a1a',
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#404040',
+    borderColor: '#1a1a1a',
   },
   responseText: {
     fontSize: 16,
@@ -81,13 +81,22 @@ export const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    padding: 8,
+    padding: 4,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    zIndex: 1,
   },
   settingsButton: {
-    padding: 8,
+    padding: 4,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 4,
   },
   settingsButtonText: {
-    fontSize: 24,
+    fontSize: 30,
+    color: '#ffffff',
+    fontWeight: '300',
   },
   modalOverlay: {
     flex: 1,
@@ -96,7 +105,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#2a2a2a',
+    backgroundColor: '#1a1a1a',
     borderRadius: 12,
     padding: 20,
     width: '90%',
@@ -115,7 +124,7 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
   },
   modalInput: {
-    backgroundColor: '#333333',
+    backgroundColor: '#1a1a1a',
     borderRadius: 8,
     padding: 12,
     color: '#ffffff',
@@ -130,7 +139,9 @@ export const styles = StyleSheet.create({
   },
   modalButton: {
     flex: 1,
-    backgroundColor: '#404040',
+    backgroundColor: '#1a1a1a',
+    borderWidth: 1,
+    borderColor: '#404040',
     borderRadius: 8,
     padding: 12,
     alignItems: 'center',

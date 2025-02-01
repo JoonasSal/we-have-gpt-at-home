@@ -1,19 +1,10 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
-  ActivityIndicator,
-  ScrollView,
-  SafeAreaView,
-  Keyboard,
-  StatusBar,
-  Modal,
-  Pressable
-} from 'react-native';
+import { SafeAreaView, View, Text, TouchableOpacity, StatusBar, Keyboard } from 'react-native';
 import { styles } from './styles';
-import { API_URL } from '@env';  // Uncomment this line
+import { API_URL } from '@env';
+import SettingsModal from './components/SettingsModal';
+import ChatInput from './components/ChatInput';
+import ChatMessages from './components/ChatMessages';
 
 // Use API_URL from env
 const DEFAULT_API_URL = API_URL;
@@ -92,92 +83,25 @@ const App = () => {
           style={styles.settingsButton}
           onPress={() => setShowSettings(true)}
         >
-          <Text style={styles.settingsButtonText}>⚙️</Text>
+          <Text style={styles.settingsButtonText}>≡</Text>
         </TouchableOpacity>
       </View>
 
-      <ScrollView 
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {error ? (
-          <Text style={styles.error}>{error}</Text>
-        ) : null}
+      <ChatMessages error={error} response={response} />
+      
+      <ChatInput 
+        prompt={prompt}
+        onChangePrompt={setPrompt}
+        onSend={fetchResponse}
+        loading={loading}
+      />
 
-        {response ? (
-          <View style={styles.responseContainer}>
-            <Text style={styles.responseText}>{response}</Text>
-          </View>
-        ) : null}
-      </ScrollView>
-
-      <View style={styles.inputWrapper}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your prompt..."
-            placeholderTextColor="#888888"
-            value={prompt}
-            onChangeText={setPrompt}
-            multiline
-          />
-          
-          <TouchableOpacity 
-            style={[styles.button, loading && styles.buttonDisabled]}
-            onPress={fetchResponse}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#ffffff" />
-            ) : (
-              <Text style={styles.buttonText}>Send</Text>
-            )}
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
+      <SettingsModal
         visible={showSettings}
-        onRequestClose={() => setShowSettings(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Settings</Text>
-            
-            <Text style={styles.modalLabel}>API URL:</Text>
-            <TextInput
-              style={styles.modalInput}
-              value={apiUrl}
-              onChangeText={setApiUrl}
-              placeholder="Enter API URL"
-              placeholderTextColor="#888888"
-            />
-
-            <View style={styles.modalButtons}>
-              <TouchableOpacity 
-                style={styles.modalButton}
-                onPress={() => {
-                  setApiUrl(DEFAULT_API_URL);
-                }}
-              >
-                <Text style={styles.modalButtonText}>Reset</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity 
-                style={[styles.modalButton, styles.modalButtonPrimary]}
-                onPress={() => {
-                  setShowSettings(false);
-                }}
-              >
-                <Text style={styles.modalButtonText}>Save</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+        onClose={() => setShowSettings(false)}
+        apiUrl={apiUrl}
+        onChangeApiUrl={setApiUrl}
+      />
     </SafeAreaView>
   );
 };
