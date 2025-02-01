@@ -7,7 +7,7 @@ const ChatInput = ({ prompt, onChangePrompt, onSend, loading }) => {
     <View style={styles.inputWrapper}>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={styles.inputWithButton}
           placeholder="Enter your prompt..."
           placeholderTextColor="#888888"
           value={prompt}
@@ -16,14 +16,14 @@ const ChatInput = ({ prompt, onChangePrompt, onSend, loading }) => {
         />
         
         <TouchableOpacity 
-          style={[styles.button, loading && styles.buttonDisabled]}
+          style={[styles.sendButton, loading && styles.buttonDisabled]}
           onPress={onSend}
           disabled={loading}
         >
           {loading ? (
-            <ActivityIndicator color="#ffffff" />
+            <ActivityIndicator color="#ffffff" size="small" />
           ) : (
-            <Text style={styles.buttonText}>Send</Text>
+            <Text style={styles.sendButtonText}>➤</Text>
           )}
         </TouchableOpacity>
       </View>
