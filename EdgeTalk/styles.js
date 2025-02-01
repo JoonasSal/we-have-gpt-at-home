@@ -78,4 +78,69 @@ export const styles = StyleSheet.create({
     lineHeight: 24,
     color: '#ffffff',
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: 8,
+  },
+  settingsButton: {
+    padding: 8,
+  },
+  settingsButtonText: {
+    fontSize: 24,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#2a2a2a',
+    borderRadius: 12,
+    padding: 20,
+    width: '90%',
+    maxWidth: 400,
+  },
+  modalTitle: {
+    color: '#ffffff',
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  modalLabel: {
+    color: '#ffffff',
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  modalInput: {
+    backgroundColor: '#333333',
+    borderRadius: 8,
+    padding: 12,
+    color: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#404040',
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  modalButton: {
+    flex: 1,
+    backgroundColor: '#404040',
+    borderRadius: 8,
+    padding: 12,
+    alignItems: 'center',
+  },
+  modalButtonPrimary: {
+    backgroundColor: '#0A84FF',
+  },
+  modalButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 }); 

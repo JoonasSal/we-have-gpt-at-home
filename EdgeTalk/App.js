@@ -8,16 +8,23 @@ import {
   ScrollView,
   SafeAreaView,
   Keyboard,
-  StatusBar
+  StatusBar,
+  Modal,
+  Pressable
 } from 'react-native';
 import { styles } from './styles';
-import { API_URL } from '@env';
+import { API_URL } from '@env';  // Uncomment this line
+
+// Use API_URL from env
+const DEFAULT_API_URL = API_URL;
 
 const App = () => {
   const [prompt, setPrompt] = useState('');
   const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showSettings, setShowSettings] = useState(false);
+  const [apiUrl, setApiUrl] = useState(DEFAULT_API_URL);
 
   const fetchResponse = async () => {
     if (!prompt.trim()) {
@@ -30,24 +37,43 @@ const App = () => {
     setError('');
     
     try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt }),
-      });
+      console.log('Attempting to fetch from:', apiUrl);
       
+      const fetchOptions = { 
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ prompt }),
+      };
+
+      // For development/testing with self-signed certs
+      if (__DEV__) {
+        console.log('Development mode - allowing self-signed certificates');
+      }
+      
+      const res = await fetch(apiUrl, fetchOptions);
+      
+      console.log('Response status:', res.status);
       const data = await res.json();
       
       if (!data.success) {
         throw new Error(data.error || 'Failed to get response');
       }
       
-      // Format response with prompt included in the response
+      setError('');
       const fullResponse = `Q: ${prompt}\n\nA: ${data.response}`;
       setResponse(fullResponse);
-      setPrompt(''); // Clear the input field
+      setPrompt('');
     } catch (err) {
-      setError(err.message || 'Failed to connect to the server');
+      console.error('Fetch error details:', {
+        message: err.message,
+        stack: err.stack,
+        name: err.name
+      });
+      setResponse('');
+      setError(`Connection error:\n${err.message}\n${err.stack}`);
     } finally {
       setLoading(false);
     }
@@ -61,6 +87,15 @@ const App = () => {
         translucent={false}
       />
       
+      <View style={styles.header}>
+        <TouchableOpacity 
+          style={styles.settingsButton}
+          onPress={() => setShowSettings(true)}
+        >
+          <Text style={styles.settingsButtonText}>⚙️</Text>
+        </TouchableOpacity>
+      </View>
+
       <ScrollView 
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -101,6 +136,48 @@ const App = () => {
           </TouchableOpacity>
         </View>
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showSettings}
+        onRequestClose={() => setShowSettings(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Settings</Text>
+            
+            <Text style={styles.modalLabel}>API URL:</Text>
+            <TextInput
+              style={styles.modalInput}
+              value={apiUrl}
+              onChangeText={setApiUrl}
+              placeholder="Enter API URL"
+              placeholderTextColor="#888888"
+            />
+
+            <View style={styles.modalButtons}>
+              <TouchableOpacity 
+                style={styles.modalButton}
+                onPress={() => {
+                  setApiUrl(DEFAULT_API_URL);
+                }}
+              >
+                <Text style={styles.modalButtonText}>Reset</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={[styles.modalButton, styles.modalButtonPrimary]}
+                onPress={() => {
+                  setShowSettings(false);
+                }}
+              >
+                <Text style={styles.modalButtonText}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
