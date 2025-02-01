@@ -39,10 +39,6 @@ const App = () => {
         body: JSON.stringify({ prompt }),
       };
 
-      // For development/testing with self-signed certs
-      if (__DEV__) {
-        console.log('Development mode - allowing self-signed certificates');
-      }
       
       const res = await fetch(apiUrl, fetchOptions);
       

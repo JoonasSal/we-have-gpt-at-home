@@ -189,6 +189,6 @@ export const styles = StyleSheet.create({
   sendButtonText: {
     color: '#ffffff',
     fontSize: 18,
-    //transform: [{ rotate: '180deg' }],
+    marginBottom: 4, 
   },
 }); 
