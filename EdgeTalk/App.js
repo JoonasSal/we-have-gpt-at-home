@@ -7,20 +7,21 @@ import ChatInput from './components/ChatInput';
 import ChatMessages from './components/ChatMessages';
 import { sendPrompt } from './services/api';
 
-// Use API_URL from env
+// Default API URL from environment variables
 const DEFAULT_API_URL = API_URL;
 
 const App = () => {
-  // Chat state
-  const [prompt, setPrompt] = useState('');
-  const [response, setResponse] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  // State for chat functionality
+  const [prompt, setPrompt] = useState('');        // Current user input
+  const [response, setResponse] = useState('');    // AI response
+  const [loading, setLoading] = useState(false);   // Loading state for API calls
+  const [error, setError] = useState('');          // Error messages
   
-  // Settings state
-  const [showSettings, setShowSettings] = useState(false);
-  const [apiUrl, setApiUrl] = useState(DEFAULT_API_URL);
+  // State for settings
+  const [showSettings, setShowSettings] = useState(false);  // Controls settings modal visibility
+  const [apiUrl, setApiUrl] = useState(DEFAULT_API_URL);   // Current API endpoint
 
+  // Handle sending prompts to the AI
   const handleSendPrompt = async () => {
     if (!prompt.trim()) {
       setError('Please enter a prompt');
@@ -33,6 +34,7 @@ const App = () => {
     
     try {
       const responseText = await sendPrompt(apiUrl, prompt.trim());
+      // Format the response to include both question and answer
       const fullResponse = `Q: ${prompt}\n\nA: ${responseText}`;
       
       setResponse(fullResponse);
@@ -47,20 +49,25 @@ const App = () => {
     }
   };
 
+  // Close settings modal
   const handleSettingsClose = () => setShowSettings(false);
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Status bar configuration */}
       <StatusBar
         barStyle="light-content"
         backgroundColor="#1a1a1a"
         translucent={false}
       />
       
+      {/* Settings button in header */}
       <Header onSettingsPress={() => setShowSettings(true)} />
 
+      {/* Chat messages display area */}
       <ChatMessages error={error} response={response} />
       
+      {/* Input area with send button */}
       <ChatInput 
         prompt={prompt}
         onChangePrompt={setPrompt}
@@ -68,6 +75,7 @@ const App = () => {
         loading={loading}
       />
 
+      {/* Settings modal */}
       <SettingsModal
         visible={showSettings}
         onClose={handleSettingsClose}
@@ -78,6 +86,7 @@ const App = () => {
   );
 };
 
+// Header component with settings button
 const Header = ({ onSettingsPress }) => (
   <View style={styles.header}>
     <TouchableOpacity 
